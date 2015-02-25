@@ -35,6 +35,8 @@ The protobuf would look something like this:
  
 The Falcon resource class would look something like this:
 
+    from falconpb import ProtocolBuffersResource
+    
     class GreetingResource(ProtocolBuffersResource):
         def __init__(self):
             super(GreetingResource, self).__init__(GreetingPbResource)
