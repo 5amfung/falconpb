@@ -1,0 +1,20 @@
+/**
+ * Resource for testing.
+ */
+message FooResource {
+    message GET {
+        required string id = 1;
+
+        message Response {
+            required string greeting = 1;
+        }
+    }
+
+    message POST {
+        required string greeting = 1;
+
+        message Response {
+            required string id = 1;
+        }
+    }
+}
