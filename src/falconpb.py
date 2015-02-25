@@ -30,24 +30,23 @@ class ProtocolBuffersResource(object):
                 setattr(self, 'on_%s' % method, self._on_prototype)
 
     @falcon.before(require_json)
-    def _on_prototype(self, req, resp, *args, **kwargs):
+    def _on_prototype(self, req, resp, **kwargs):
         """A prototype for method handlers (on_get(), etc)."""
-        self._handle(req, resp, *args, **kwargs)
+        self._handle(req, resp, **kwargs)
 
-    def _handle(self, req, resp, *args, **kwargs):
+    def _handle(self, req, resp, **kwargs):
         """Convert request data to protobuf and invoke appropriate handler."""
-        pb = self._to_pb(req)
+        pb = self._to_pb(req, kwargs)
+
         handle = getattr(self, 'handle_%s' % req.method.lower())
-        result = handle(req, resp, pb, *args, **kwargs)
+        result = handle(req, resp, pb, **kwargs)
         resp_dict = protobuf_to_dict.protobuf_to_dict(result)
 
         if resp_dict:
             resp.body = json.dumps(resp_dict)
 
-    def _to_pb(self, req):
+    def _to_pb(self, req, params):
         """Convert request data to protobuf."""
-
-        # TODO: What to do with url params?
         body = req.stream.read() or '{}'
 
         try:
@@ -55,6 +54,11 @@ class ProtocolBuffersResource(object):
         except ValueError:
             raise falcon.HTTPBadRequest('Invalid request',
                                         'Cannot parse JSON in request body.')
+
+        # Copy URL params.
+        for ea_params in (params, req.params):
+            for key in ea_params:
+                body_dict[key] = ea_params[key]
 
         class_ = getattr(self.pb_class, req.method)
         return protobuf_to_dict.dict_to_protobuf(class_, body_dict)
