@@ -16,7 +16,7 @@ test: env pb
 	$(RUN_ENV); nosetests --verbose --with-coverage --cover-package=falconpb --where=src/tests
 
 pb:
-	$(PROTOC) $(PROTOC_FLAGS) src/tests/FooResource.proto
+	$(PROTOC) $(PROTOC_FLAGS) src/tests/PingResource.proto
 
 clean: clean_env clean_pyc clean_generated_protos
 

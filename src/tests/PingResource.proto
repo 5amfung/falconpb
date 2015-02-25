@@ -1,12 +1,13 @@
 /**
  * Resource for testing.
  */
-message FooResource {
+message PingResource {
     message GET {
-        required string id = 1;
+        required string greeting_from_url = 1;
+        required string greeting_from_query = 2;
 
         message Response {
-            required string greeting = 1;
+            required string reply = 1;
         }
     }
 
@@ -14,7 +15,7 @@ message FooResource {
         required string greeting = 1;
 
         message Response {
-            required string id = 1;
+            required string reply = 1;
         }
     }
 }
