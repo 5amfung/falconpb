@@ -7,6 +7,7 @@ setup(name='falconpb',
       description='Protocol Buffers based resource for Falcon',
       keywords='falcon protocol buffers protobuf',
       classifiers=[
+          'Programming Language :: Python :: 2.6',
           'Programming Language :: Python :: 2.7',
           'Intended Audience :: Developers',
           'Topic :: Software Development :: Libraries :: Python Modules',

@@ -1,6 +1,7 @@
 # Makefile
 
 RUN_ENV = . env/bin/activate
+PYTHON = $(RUN_ENV); python
 PROTOC = protoc
 PROTOC_FLAGS = --proto_path=tests --python_out=tests
 
@@ -13,9 +14,9 @@ env/bin/activate: requirements.txt
 	touch env/bin/activate
 
 test: env pb
-	$(RUN_ENV); python setup.py develop
-	$(RUN_ENV); nosetests --verbose --with-coverage --cover-package=falconpb --where=tests
-	$(RUN_ENV); python setup.py develop --uninstall
+	$(PYTHON) setup.py develop
+	$(RUN_ENV); `which nosetests` --verbose --with-coverage --cover-package=falconpb --where=tests
+	$(PYTHON) setup.py develop --uninstall
 
 pb:
 	$(PROTOC) $(PROTOC_FLAGS) tests/PingResource.proto
@@ -23,6 +24,7 @@ pb:
 clean: clean_env clean_pyc clean_generated_protos
 
 clean_env:
+	$(PYTHON) setup.py clean
 	rm -rf env
 
 clean_pyc:
@@ -32,4 +34,5 @@ clean_generated_protos:
 	find . -name '*_pb2.py' -delete
 
 build: env
-	$(RUN_ENV); python setup.py bdist_wheel --universal
+	$(PYTHON) setup.py sdist
+	$(PYTHON) setup.py bdist_wheel --universal
