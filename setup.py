@@ -3,7 +3,7 @@ from setuptools import setup
 
 
 setup(name='falconpb',
-      version='1.0.0rc1',
+      version='1.0.0',
       description='Protocol Buffers based resource for Falcon',
       keywords='falcon protocol buffers protobuf',
       classifiers=[
