@@ -4,7 +4,7 @@ import falcon
 from falcon import testing
 
 import falconpb
-from tests import PingResource_pb2
+from falconpb.tests import PingResource_pb2
 
 
 class PingResource(falconpb.ProtocolBuffersResource):
