@@ -5,16 +5,16 @@ Protocol Buffers based resource for Falcon.
 
 ## How to install
 
-```pip install falconpb```
+Run ```pip install falconpb```.
 
 
 ## How to use
 
 The base class encodes the URL parameters, query parameters, and the body
 to a protobuf of your choice.  You have to define the protobuf.  The protobuf
-message needs to have a message type with name that is the method name in
-all caps.  With it, there should also be a message type called Response, which
-is used for the HTTP response.
+message needs to have a message type with a name that is the method name in
+all caps.  Within it, there should also be a message type called Response,
+which is used as a HTTP response.
 
 For example, subclass ```ProtocolBuffersResource``` and implement
 the ```handle_get``` method.  Replace ```get``` with other http methods
@@ -50,3 +50,8 @@ The Falcon resource class would look something like this:
 
     app = falcon.API()
     app.add_route('/{name}', GreetingResource())
+
+
+## How to build
+
+Run ```make build```.

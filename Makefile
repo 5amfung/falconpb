@@ -2,7 +2,7 @@
 
 RUN_ENV = . env/bin/activate
 PROTOC = protoc
-PROTOC_FLAGS = --proto_path=src/tests --python_out=src/tests
+PROTOC_FLAGS = --proto_path=falconpb/tests --python_out=falconpb/tests
 
 all: test
 
@@ -13,10 +13,10 @@ env/bin/activate: requirements.txt
 	touch env/bin/activate
 
 test: env pb
-	$(RUN_ENV); nosetests --verbose --with-coverage --cover-package=falconpb --where=src/tests
+	$(RUN_ENV); nosetests --verbose --with-coverage --cover-package=falconpb --where=falconpb/tests
 
 pb:
-	$(PROTOC) $(PROTOC_FLAGS) src/tests/PingResource.proto
+	$(PROTOC) $(PROTOC_FLAGS) falconpb/tests/PingResource.proto
 
 clean: clean_env clean_pyc clean_generated_protos
 
@@ -28,3 +28,6 @@ clean_pyc:
 
 clean_generated_protos:
 	find . -name '*_pb2.py' -delete
+
+build: test
+	$(RUN_ENV); python setup.py bdist_wheel --universal

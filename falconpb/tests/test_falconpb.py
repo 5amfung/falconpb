@@ -59,3 +59,9 @@ class ProtocolBuffersResourceTest(testing.TestBase):
                               body='{"greet')
         self.assertEqual(self.srmock.status, falcon.HTTP_400)
 
+    def test_no_json(self):
+        headers = {
+            'Accept': 'application/xml'
+        }
+        self.simulate_request('/a111', headers=headers)
+        self.assertEqual(self.srmock.status, falcon.HTTP_406)

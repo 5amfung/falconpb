@@ -1,4 +1,6 @@
-coverage
-falcon
-nose
-protobuf-to-dict
+coverage>=3.7.1
+falcon>=0.2
+nose>=1.3.4
+protobuf-to-dict>=0.1.0
+twine
+wheel

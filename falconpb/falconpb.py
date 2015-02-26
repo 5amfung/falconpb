@@ -45,8 +45,8 @@ class ProtocolBuffersResource(object):
         if resp_dict:
             resp.body = json.dumps(resp_dict)
 
-    def _to_pb(self, req, params):
-        """Convert request data to protobuf."""
+    def _to_pb(self, req, url_params):
+        """Return a protobuf given the request and the URL params."""
         body = req.stream.read() or '{}'
 
         try:
@@ -55,10 +55,10 @@ class ProtocolBuffersResource(object):
             raise falcon.HTTPBadRequest('Invalid request',
                                         'Cannot parse JSON in request body.')
 
-        # Copy URL params.
-        for ea_params in (params, req.params):
-            for key in ea_params:
-                body_dict[key] = ea_params[key]
+        # Copy URL params and URL query params.
+        for params in (url_params, req.params):
+            for key in params:
+                body_dict[key] = params[key]
 
-        class_ = getattr(self.pb_class, req.method)
-        return protobuf_to_dict.dict_to_protobuf(class_, body_dict)
+        pb_class = getattr(self.pb_class, req.method)
+        return protobuf_to_dict.dict_to_protobuf(pb_class, body_dict)
