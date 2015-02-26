@@ -1,10 +1,11 @@
 """Unit tests."""
 
 import falcon
+import falconpb
+
 from falcon import testing
 
-import falconpb
-from falconpb.tests import PingResource_pb2
+from tests import PingResource_pb2
 
 
 class PingResource(falconpb.ProtocolBuffersResource):
